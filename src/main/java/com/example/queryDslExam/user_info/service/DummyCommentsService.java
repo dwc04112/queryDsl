@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class DummyCommentsService {
 
     private final DummyCommentsRepository repository;
     WebClient webClient = WebClient.builder()
