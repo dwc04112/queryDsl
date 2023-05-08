@@ -2,7 +2,7 @@ package com.example.queryDslExam.user_info.service;
 
 import com.example.queryDslExam.user_info.DTO.DummyCommentsDTO;
 import com.example.queryDslExam.user_info.entity.DummyComments;
-import com.example.queryDslExam.user_info.model.DummyCommentsRepository;
+import com.example.queryDslExam.user_info.model.CommentsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DummyCommentsService {
 
-    private final DummyCommentsRepository repository;
+    private final CommentsRepository repository;
     WebClient webClient = WebClient.builder()
             .baseUrl("https://jsonplaceholder.typicode.com/")
             .build();
@@ -37,11 +38,19 @@ public class DummyCommentsService {
                 .block();
     }
 
-    public Integer setDummyComments() {
+    public List<DummyComments> setDummyComments() {
         List<DummyComments> data = getDummyComments()
                 .stream()
                 .map(DummyComments::toEntity)
                 .collect(Collectors.toList());
-        return repository.saveAll(data).size();
+        return repository.saveAll(data);
+    }
+
+    public List<DummyComments> selectDummyComments() {
+        return repository.searchAll();
+    }
+
+    public List<DummyComments> selectDummyCommentsByKeyword(String keyword) {
+        return repository.searchByName(keyword);
     }
 }

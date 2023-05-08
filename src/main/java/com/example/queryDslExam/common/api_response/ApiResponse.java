@@ -23,6 +23,10 @@ public class ApiResponse<T> {
         return new ApiResponse<T>(new ApiHeader(SUCCESS, "SUCCESS"), new ApiBody<>(data,null));
     }
 
+    public static <T> ApiResponse<T> OK_MSG(T data, T msg) {
+        return new ApiResponse<T>(new ApiHeader(SUCCESS, "SUCCESS"), new ApiBody<>(data,msg));
+    }
+
     public static <T> ApiResponse<T> fail(ErrorCode errorCode) {
         return new ApiResponse<T>(new ApiHeader(errorCode.getCode(), errorCode.name()), new ApiBody(null, errorCode.getMessage() ));
     }
