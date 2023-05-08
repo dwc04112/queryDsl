@@ -8,4 +8,6 @@ public interface CommentsRepositoryCustom {
 
     List<DummyComments> searchAll ();
     List<DummyComments> searchByName (String searchKeyword);
+
+    Long deleteByName(String searchKeyword);
 }

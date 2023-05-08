@@ -6,10 +6,7 @@ import com.example.queryDslExam.user_info.DTO.DummyCommentsDTO;
 import com.example.queryDslExam.user_info.entity.DummyComments;
 import com.example.queryDslExam.user_info.service.DummyCommentsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -55,4 +52,11 @@ public class DummyCommentsController {
                 .collect(Collectors.toList());
         return ApiResponse.OK_MSG(result, result.size());
     }
+
+    @DeleteMapping("/delete/{keyword}")
+    public ApiResponse<Object> deleteDummyCommentsByKeyword(@PathVariable String keyword){
+        return ApiResponse.OK_MSG(null, dummyCommentsService.deleteDummyCommentsByKeyword(keyword));
+    }
+
+
 }

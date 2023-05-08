@@ -11,4 +11,6 @@ public interface CommentsRepository extends JpaRepository<DummyComments, Long>,
         CommentsRepositoryCustom  {
     List<DummyComments> searchAll ();
     List<DummyComments> searchByName (String searchKeyword);
+
+    Long deleteByName(String searchKeyword);
 }

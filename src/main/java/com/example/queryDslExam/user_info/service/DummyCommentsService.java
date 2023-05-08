@@ -46,11 +46,16 @@ public class DummyCommentsService {
         return repository.saveAll(data);
     }
 
+
     public List<DummyComments> selectDummyComments() {
         return repository.searchAll();
     }
 
     public List<DummyComments> selectDummyCommentsByKeyword(String keyword) {
         return repository.searchByName(keyword);
+    }
+
+    public Long deleteDummyCommentsByKeyword(String keyword) {
+        return repository.deleteByName(keyword);
     }
 }

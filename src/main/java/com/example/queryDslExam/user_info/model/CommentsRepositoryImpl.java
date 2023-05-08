@@ -3,6 +3,8 @@ package com.example.queryDslExam.user_info.model;
 import com.example.queryDslExam.user_info.entity.DummyComments;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +27,15 @@ public class CommentsRepositoryImpl implements CommentsRepositoryCustom {
                 .from(dummyComments)
                 .where(dummyComments.name.contains(searchKeyword))
                 .fetch();
+    }
+
+    @Override
+    @Transactional
+    @Modifying
+    public Long deleteByName(String searchKeyword) {
+        return jpaQueryFactory.delete(dummyComments)
+                .where(dummyComments.name.contains(searchKeyword))
+                .execute();
     }
 }
 
