@@ -7,7 +7,10 @@ import com.example.queryDslExam.user_info.entity.DummyComments;
 import com.example.queryDslExam.user_info.service.DummyCommentsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -19,13 +22,8 @@ public class DummyCommentsController {
 
     private final DummyCommentsService dummyCommentsService;
 
-    @GetMapping("/get")
-    public ApiResponse<List<DummyCommentsDTO>> getDummyComments(){
-        return ApiResponse.OK(dummyCommentsService.getDummyComments());
-    }
-
     @GetMapping("/set")
-    public ApiResponse<List<DummyCommentsDTO>> setDummyComments(){
+    public ApiResponse<List<DummyCommentsDTO>> setDummyComments() {
         return ApiResponse.OK(
                 dummyCommentsService.setDummyComments()
                 .stream()
@@ -36,21 +34,18 @@ public class DummyCommentsController {
 
 
     @GetMapping("/select")
-    public ApiResponse<List<DummyCommentsDTO>> selectDummyComments(){
-        return ApiResponse.OK(
+    public List<DummyCommentsDTO> selectDummyComments(){
+        return
                 dummyCommentsService.selectDummyComments()
                         .stream()
                         .map(DummyCommentsDTO::from)
-                        .collect(Collectors.toList())
-        );
+                        .collect(Collectors.toList());
     }
     @GetMapping("/select/{keyword}")
-    public ApiResponse<Object> selectDummyCommentsByKeyword(@PathVariable String keyword){
-        List<DummyCommentsDTO> result = dummyCommentsService.selectDummyCommentsByKeyword(keyword)
-                .stream()
+    public List<DummyCommentsDTO> selectDummyCommentsByKeyword(@PathVariable String keyword){
+        return dummyCommentsService.selectDummyCommentsByKeyword(keyword).stream()
                 .map(DummyCommentsDTO::from)
                 .collect(Collectors.toList());
-        return ApiResponse.OK_MSG(result, result.size());
     }
 
     @DeleteMapping("/delete/{keyword}")
